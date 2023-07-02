@@ -1,0 +1,7 @@
+{
+  "path": "/to-dos/1",
+  "httpMethod": "DELETE",
+  "pathParameters": {
+    "id": "1"
+  }
+}

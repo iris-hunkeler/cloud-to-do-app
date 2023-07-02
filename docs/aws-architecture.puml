@@ -1,0 +1,17 @@
+@startuml aws-architecture
+
+!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/v15.0/dist
+!include AWSPuml/AWSCommon.puml
+!include AWSPuml/Compute/Lambda.puml
+!include AWSPuml/Database/DynamoDB.puml
+!include AWSPuml/ApplicationIntegration/EventBridgeScheduler.puml
+!include AWSPuml/ApplicationIntegration/SimpleNotificationService.puml
+!include AWSPuml/ApplicationIntegration/SimpleNotificationServiceEmailNotification.puml
+!include AWSPuml/ApplicationIntegration/APIGateway.puml
+
+
+left to right direction
+
+Lambda(stateless_todo, "stateless-to-do", "Recieve a To Do list entry and return it")
+
+@enduml

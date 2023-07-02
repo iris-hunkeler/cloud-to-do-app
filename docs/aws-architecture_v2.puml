@@ -1,0 +1,44 @@
+@startuml aws-architecture_v2
+
+!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/v15.0/dist
+!include AWSPuml/AWSCommon.puml
+!include AWSPuml/Compute/Lambda.puml
+!include AWSPuml/Database/DynamoDB.puml
+!include AWSPuml/ApplicationIntegration/EventBridgeScheduler.puml
+!include AWSPuml/ApplicationIntegration/SimpleNotificationService.puml
+!include AWSPuml/ApplicationIntegration/SimpleNotificationServiceEmailNotification.puml
+!include AWSPuml/ApplicationIntegration/APIGateway.puml
+
+
+left to right direction
+
+actor "User" as user
+
+APIGateway(gateway, "to-do-api", "External API to create, read, update and delete To Do list entries")
+
+EventBridgeScheduler(scheduler, "todays-to-do-reminder", "Trigger Lambda every morning")
+
+Lambda(crud_todo, "crud-to-do", "Create, read, update and delete To Do list entries")
+Lambda(todays_todos, "daily-to-do-notification", "Get a list of all entries due today and send out notification")
+
+DynamoDB(db, "to-do-table", "Store all To Do list entries")
+
+SimpleNotificationService(sns, "to-do-sns-topic", "Topic to handle notifications")
+SimpleNotificationServiceEmailNotification(sns_email, "sns-email-subscription", "Send notification to a specified, registered email address")
+
+user --> gateway: GET /to-dos
+user --> gateway: GET /to-dos/{id}
+user --> gateway: PUT /to-dos
+user --> gateway: DELETE /to-dos/{id}
+
+gateway -> crud_todo: trigger lambda with parameters
+
+crud_todo --> db: create, read, update or delete entry
+
+scheduler --> todays_todos: trigger lambda
+todays_todos --> db: read entries
+
+todays_todos --> sns: trigger notification if there are entries for today
+sns --> sns_email: send out email as reminder
+
+@enduml

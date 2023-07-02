@@ -1,0 +1,8 @@
+{
+  "path": "/to-dos",
+  "httpMethod": "PUT",
+  "pathParameters": {
+    "id": 1
+  },
+  "body": "{\"id\": \"1\", \"description\": \"Book vacation\", \"dueDate\": \"2023-07-15\"}"
+}

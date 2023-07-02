@@ -1,0 +1,7 @@
+{
+  "path": "/to-dos/1",
+  "httpMethod": "GET",
+  "pathParameters": {
+    "id": 1
+  }
+}
