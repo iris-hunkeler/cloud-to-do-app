@@ -14,4 +14,7 @@ left to right direction
 
 Lambda(stateless_todo, "stateless-to-do", "Recieve a To Do list entry and return it")
 
+
+in --> stateless_todo: enter To Do item information 
+stateless_todo --> out : return To Do item information 
 @enduml
