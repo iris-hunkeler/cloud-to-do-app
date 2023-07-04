@@ -18,6 +18,7 @@ hosted by [women++](https://www.womenplusplus.ch/) and [Iris Hunkeler](https://w
   * Role name: todo-lambda-role
   * Click “Create role”
 
+
 ## … create a DynamoDB table
 * Go to DynamoDB → Click “Create table”
 * Settings
@@ -32,7 +33,7 @@ hosted by [women++](https://www.womenplusplus.ch/) and [Iris Hunkeler](https://w
 * Go to AWS Lambda → click “Create function”
 * Settings
   * Select “Author from scratch”
-  * Function name: stateless-do-to
+  * Function name: e.g. stateless-do-to
   * Runtime: Python 3.10
   * Open “Change default execution role” and switch it to “Use an existing role”
   * Select our previously created “todo-lambda-role”
@@ -88,7 +89,10 @@ Our goal is to have an API endpoint for each of the methods we handle in the Lam
   * Permissions: Create a new role for this schedule
   * Review and Click “Create schedule”
 
-
+## Links to source code for Lambda functions
+* [stateless-to-do](../lambda_functions/stateless_to_do/app.py)
+* [crud-to-do](../lambda_functions/crud_to_do/app.py)
+* [daily-to-do-notification](../lambda_functions/daily_to_do_notification/app.py)
 
 
 
