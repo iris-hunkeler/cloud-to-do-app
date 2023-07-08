@@ -12,33 +12,55 @@
 
 left to right direction
 
-actor "User" as user
+' Part 1: a simple, stateless Lambda function
+artifact part_1 as "Part 1" {
+    entity in
+    entity out
 
-APIGateway(gateway, "to-do-api", "External API to create, read, update and delete To Do list entries")
+    Lambda(stateless_todo, "stateless-to-do", "Recieve a To Do list entry and return it")
 
-EventBridgeScheduler(scheduler, "todays-to-do-reminder", "Trigger Lambda every morning")
+    in --> stateless_todo: enter To Do item information 
+    stateless_todo --> out : return To Do item information 
+}
 
-Lambda(crud_todo, "crud-to-do", "Create, read, update and delete To Do list entries")
-Lambda(todays_todos, "daily-to-do-notification", "Get a list of all entries due today and send out notification")
+part_1 -[hidden]-> part_2
+part_2 -[hidden]-> part_3
 
-DynamoDB(db, "to-do-table", "Store all To Do list entries")
+' Part 2: CRUD of To Do notifications
+artifact part_2 as "Part 2" {
+    actor "User" as user
 
-SimpleNotificationService(sns, "to-do-sns-topic", "Topic to handle notifications")
-SimpleNotificationServiceEmailNotification(sns_email, "sns-email-subscription", "Send notification to a specified, registered email address")
+    APIGateway(gateway, "to-do-api", "External API to create, read, update and delete To Do list entries")
 
-user --> gateway: GET /to-dos
-user --> gateway: GET /to-dos/{id}
-user --> gateway: PUT /to-dos
-user --> gateway: DELETE /to-dos/{id}
+    Lambda(crud_todo, "crud-to-do", "Create, read, update and delete To Do list entries")
 
-gateway -> crud_todo: trigger lambda with parameters
+    DynamoDB(db, "to-do-table", "Store all To Do list entries")
 
-crud_todo --> db: create, read, update or delete entry
+    user --> gateway: GET /to-dos
+    user --> gateway: GET /to-dos/{id}
+    user --> gateway: PUT /to-dos
+    user --> gateway: DELETE /to-dos/{id}
 
-scheduler --> todays_todos: trigger lambda
-todays_todos --> db: read entries
+    gateway --> crud_todo: trigger lambda with parameters
 
-todays_todos --> sns: trigger notification if there are entries for today
-sns --> sns_email: send out email as reminder
+    crud_todo --> db: create, read, update or delete entry
+}
+
+' Part 3: scheduled reminder email
+artifact part_3 as "Part 3" {
+    EventBridgeScheduler(scheduler, "todays-to-do-reminder", "Trigger Lambda every morning")
+    
+    Lambda(todays_todos, "daily-to-do-notification", "Get a list of all entries due today and send out notification")
+
+    SimpleNotificationService(sns, "to-do-sns-topic", "Topic to handle notifications")
+    SimpleNotificationServiceEmailNotification(sns_email, "sns-email-subscription", "Send notification to a specified, registered email address")
+
+    scheduler --> todays_todos: trigger lambda
+
+    todays_todos --> db: read entries
+    todays_todos --> sns: trigger notification if there are entries for today
+    
+    sns --> sns_email: send out email as reminder
+}
 
 @enduml

@@ -14,9 +14,15 @@ This project contains source code and supporting files for a serverless applicat
 
 The application uses several AWS resources, including Lambda functions and an API Gateway API. These resources are defined in the `template.yaml` file in this project. You can update the template to add AWS resources through the same deployment process that updates your application code.
 
-## Deploy the sample application
+## Build the application manually in the AWS Management Console
+To build and deploy the the application manually, follow the instructions in 
+[HowToOnAWS](./docs/HowToOnAWS.md)
 
-The Serverless Application Model Command Line Interface (SAM CLI) is an extension of the AWS CLI that adds functionality for building and testing Lambda applications. It uses Docker to run your functions in an Amazon Linux environment that matches Lambda. It can also emulate your application's build environment and API.
+## Deploy the application using SAM
+
+:warning: This is still under construction and not yet completed!
+
+The Serverless Application Model Command Line Interface (SAM CLI) is an extension of the AWS CLI that adds functionality for building and testing Lambda applications. It uses Docker to run  functions in an Amazon Linux environment that matches Lambda. It can also emulate an application's build environment and API.
 
 To use the SAM CLI, you need the following tools.
 
@@ -38,18 +44,20 @@ You can find your API Gateway Endpoint URL in the output values displayed after 
 
 ## Use the SAM CLI to build and test locally
 
+:warning: This is still under construction and not yet completed!
+
 ```bash
 # build application
 cloud-to-do-app$ sam build --use-container
 ```
 
-The SAM CLI installs dependencies defined in `hello_world/requirements.txt`, creates a deployment package, and saves it in the `.aws-sam/build` folder.
+The SAM CLI installs dependencies, creates a deployment package, and saves it in the `.aws-sam/build` folder.
 
 Test a single function by invoking it directly with a test event. An event is a JSON document that represents the input that the function receives from the event source. Test events are included in the `events` folder in this project.
 
 ```bash
 # run functions locally
-cloud-to-do-app$ sam local invoke HelloWorldFunction --event events/event.json
+cloud-to-do-app$ sam local invoke CrudToDoFunction --event events/event.json
 ```
 
 The SAM CLI can also emulate your application's API. Use the `sam local start-api` to run the API locally on port 3000.
