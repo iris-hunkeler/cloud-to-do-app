@@ -1,1 +1,1 @@
-The content has been moved to [workshop-instructions](../workshop-instructions.md).
+The content has been moved to [workshop-instructions](workshop-instructions.md).
