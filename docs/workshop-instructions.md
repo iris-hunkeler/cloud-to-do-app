@@ -6,6 +6,10 @@ Hints and instructions for the workshop
 
 hosted by [women++](https://www.womenplusplus.ch/), facilitated by [Iris Hunkeler](https://www.linkedin.com/in/iris-hunkeler/)
 
+# Architecture
+The instructions will take you through the steps to build the following architecture on AWS:
+
+![aws-architecture](rendered/aws-architecture.png)
 
 # Part 1
 
