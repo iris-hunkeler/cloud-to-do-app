@@ -6,6 +6,8 @@ Hints and instructions for the workshop
 
 hosted by [women++](https://www.womenplusplus.ch/), facilitated by [Iris Hunkeler](https://www.linkedin.com/in/iris-hunkeler/)
 
+For more background and infos to the individual services, please check the [workshop slides](Slides_LeverageTheCloudToDeployAndRunYourBackendApp.pdf).
+
 # Architecture
 The instructions will take you through the steps to build the following architecture on AWS:
 
